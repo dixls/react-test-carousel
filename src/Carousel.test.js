@@ -7,11 +7,11 @@ it("should load without crashing", () => {
 });
 
 it("matches snapshot", () => {
-  const {asFragment} = render(<Carousel />);
+  const { asFragment } = render(<Carousel />);
   expect(asFragment()).toMatchSnapshot();
 });
 
-it("works when you click on the right arrow", function() {
+it("works when you click on the right arrow", function () {
   const { queryByTestId, queryByAltText } = render(<Carousel />);
 
   // expect the first image to show, but not the second
@@ -27,9 +27,9 @@ it("works when you click on the right arrow", function() {
   expect(queryByAltText("Photo by Pratik Patel on Unsplash")).toBeInTheDocument();
 });
 
-it("works when you click on the left arrow", function() {
+it("works when you click on the left arrow", function () {
   const { queryByTestId, queryByAltText } = render(<Carousel />);
-  
+
   // move forward in the carousel
   const rightArrow = queryByTestId("right-arrow");
   fireEvent.click(rightArrow);
@@ -48,21 +48,22 @@ it("works when you click on the left arrow", function() {
 });
 
 it("should not show left arrow when first image is showing", () => {
-  
-  const leftArrow = queryByTestId("left-arrow");
-  expect(leftArrow).not.toBeInTheDocument();
+  const { queryByTestId } = render(<Carousel />);
+
+  expect(queryByTestId("left-arrow")).not.toBeInTheDocument();
 
   // move forward in the carousel
   const rightArrow = queryByTestId("right-arrow");
   fireEvent.click(rightArrow);
 
-  expect(leftArrow).toBeInTheDocument();
+  expect(queryByTestId("left-arrow")).toBeInTheDocument();
 });
 
 it("should not show right arrow when last image is showing", () => {
-  
+  const { queryByTestId } = render(<Carousel />);
+
   const rightArrow = queryByTestId("right-arrow");
-  expect(rightArrow).not.toBeInTheDocument();
+  expect(rightArrow).toBeInTheDocument();
 
   // move forward to the end of the carousel
   fireEvent.click(rightArrow);
